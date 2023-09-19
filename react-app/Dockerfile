@@ -22,5 +22,5 @@ RUN npm install typescript
 EXPOSE 8080
 CMD ["npm", "run", "preview"]
 
-# docker build -t vite-react-app:latest .
-# docker run -p 8080:8080 vite-react-app:latest
+# docker build -t react-client-image:latest .
+# docker run -p 8080:8080 react-client-image:latest
