@@ -1,10 +1,11 @@
 import { useRef, useState, useEffect, FormEvent } from "react";
 import axios from "../services/axios";
+import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
 
     // 
-    const [userName, setUserName] = useState('');
+    const [name, setUserName] = useState('');
 
     const [password, setPassword] = useState('');
     const [passwordErr, setPasswordErr] = useState('');
@@ -12,16 +13,18 @@ const Register: React.FC = () => {
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [passwordConfirmErr, setPasswordConfirmErr] = useState('');
 
-    const [isAdult, setIsAdult] = useState(false)
+    const [is18, setIsAdult] = useState(false)
 
     // Общие ошибки
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const navigate = useNavigate();
+
     // Хуки на изменение состояния
     useEffect(() => {
-        console.log(userName);
-    }, [userName]);
+        console.log(name);
+    }, [name]);
 
     useEffect(() => {
         if (password && password.length <= 3) {
@@ -41,28 +44,24 @@ const Register: React.FC = () => {
         }
     }, [password, passwordConfirm]);
 
-    useEffect(() => { console.log(isAdult); }, [isAdult]);
+    useEffect(() => { console.log(is18); }, [is18]);
 
     const onSubmitHandle = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         // TODO POST If good set success
         try {
-            const response = await axios.post("/register", JSON.stringify({ userName, password, isAdult }),
+            const response = await axios.post("/Registration", JSON.stringify({ name, password, is18 }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 });
 
-            // TODO check data
-            response.data;
+            console.log(response);
 
-
-
-            setSuccess(true);
+            navigate("/login")
         } catch (error) {
-            // setError
+            setErrMsg(error?.response?.data + " | " + error?.message);
         }
-
     };
 
     return (
@@ -75,7 +74,7 @@ const Register: React.FC = () => {
 
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Ваше имя</label>
-                            <input className="form-control bg-dark text-white" id="username" type="text" autoComplete="off" required value={userName} onChange={(e) => setUserName(e.target.value)} />
+                            <input className="form-control bg-dark text-white" id="username" type="text" autoComplete="off" required value={name} onChange={(e) => setUserName(e.target.value)} />
                         </div>
 
                         <div className="mb-3">
@@ -91,7 +90,7 @@ const Register: React.FC = () => {
                         </div>
 
                         <div className="mb-3 form-check">
-                            <input type="checkbox" className="form-check-input" id="18" onChange={() => { setIsAdult(!isAdult) }} />
+                            <input type="checkbox" className="form-check-input" id="18" onChange={() => { setIsAdult(!is18) }} />
                             <label className="form-check-label" htmlFor="18">Мне 18+ лет</label>
                         </div>
                         <button type="submit" className="btn btn-primary">Зарегистрироваться</button>
