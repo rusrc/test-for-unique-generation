@@ -2,7 +2,7 @@
 const NotFound: React.FC = () => {
 
     return (
-        <section>
+        <section className="text-center display-1 text-white">
             NotFound
         </section>
     )

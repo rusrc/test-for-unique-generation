@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 interface IAuth {
     userName: string,
     password: string,
-    roles: [],
+    roles: [string],
     accessToken: string
 }
 
@@ -14,23 +14,25 @@ interface IContext {
 
 const defaultAuth: IAuth =
 {
-    accessToken: '',
+    userName: '',
+    roles: [''],
     password: '',
-    roles: [],
-    userName: ''
+    accessToken: ''
 };
 
 const defaultState: IContext = {
     auth: defaultAuth
 }
 
-
+// 
 // TODO any to IContext
-const AuthContext = createContext<any>({});
+const AuthContext = createContext<any>(null);
 
+// https://react.dev/reference/react/useContext#optimizing-re-renders-when-passing-objects-and-functions
+// https://stackoverflow.com/questions/57854111/what-to-set-as-the-providers-value-in-order-to-change-context-from-a-consumer
 // Children внутри провайдера
-export const AuthProvider = ({ children }: any) => {
-    const [auth, setAuth] = useState({});
+export const AuthProvider  = ({ children }) => {
+    const [auth, setAuth] = useState(defaultAuth);
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>

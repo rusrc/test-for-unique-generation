@@ -5,6 +5,9 @@ import RequiredAuth from './pages/RequireAuth';
 import Layout from './pages/Layout';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import ForOther from './pages/ForOther';
+import ForLimited from './pages/ForLimited';
+import Unauthorized from './pages/Unauthorized';
 
 function App() {
 
@@ -12,13 +15,17 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* Public routes */}
+        <Route path="/" element={<Home />} />
         <Route path='login' element={<Login />} />
         <Route path='register' element={<Register />} />
+        <Route path='unauthorized' element={<Unauthorized />} />
 
-        {/* Projected */}
-        <Route element={<RequiredAuth />}>
-          {/* Default home path if not loging */}
-          <Route path="/" element={<Home />} />
+        {/* Protected */}
+        <Route element={<RequiredAuth allowedRoles={["other"]} />}>
+          <Route path="/for-other" element={<ForOther />} />
+        </Route>
+        <Route element={<RequiredAuth allowedRoles={["18+"]} />}>
+          <Route path="/for-limited" element={<ForLimited />} />
         </Route>
 
         {/* Default */}

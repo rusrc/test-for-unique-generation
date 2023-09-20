@@ -5,10 +5,16 @@ const Register: React.FC = () => {
 
     // 
     const [userName, setUserName] = useState('');
+
     const [password, setPassword] = useState('');
+    const [passwordErr, setPasswordErr] = useState('');
+
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [passwordConfirmErr, setPasswordConfirmErr] = useState('');
+
     const [isAdult, setIsAdult] = useState(false)
 
-    // Ошибки
+    // Общие ошибки
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
@@ -21,11 +27,19 @@ const Register: React.FC = () => {
         if (password && password.length <= 3) {
             let msg = "Слишком короткий пароль";
             console.log(msg);
-            setErrMsg(msg)
+            setPasswordErr(msg)
         } else {
-            setErrMsg("");
+            setPasswordErr("");
         }
     }, [password]);
+
+    useEffect(() => {
+        if ((password && passwordConfirm) && password != passwordConfirm) {
+            setPasswordConfirmErr("Пароль не совпадает");
+        } else {
+            setPasswordConfirmErr("");
+        }
+    }, [password, passwordConfirm]);
 
     useEffect(() => { console.log(isAdult); }, [isAdult]);
 
@@ -57,6 +71,7 @@ const Register: React.FC = () => {
                 <form onSubmit={onSubmitHandle} className="col-sm-6 text-white pt-5">
                     <fieldset>
                         <legend>Форма регистрации</legend>
+                        <small><span className="text-danger"> {errMsg ? errMsg : ""}</span></small>
 
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Ваше имя</label>
@@ -66,7 +81,13 @@ const Register: React.FC = () => {
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Укажите пароль</label>
                             <input className="form-control bg-dark text-white" id="password" type="password" autoComplete="off" required value={password} onChange={(e) => setPassword(e.target.value)} />
-                            <small><span className="text-danger"> {errMsg ? errMsg : ""}</span></small>
+                            <small><span className="text-danger"> {passwordErr ? passwordErr : ""}</span></small>
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="passwordConfirm" className="form-label">Повторите пароль</label>
+                            <input className="form-control bg-dark text-white" id="passwordConfirm" type="password" autoComplete="off" required value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
+                            <small><span className="text-danger"> {passwordConfirmErr ? passwordConfirmErr : ""}</span></small>
                         </div>
 
                         <div className="mb-3 form-check">
@@ -78,7 +99,6 @@ const Register: React.FC = () => {
                     </fieldset>
                 </form>
             </div>
-
         </section>
     );
 }
