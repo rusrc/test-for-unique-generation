@@ -8,8 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.WebHost
-//    .UseKestrel(options => options.Listen(IPAddress.Any, 5000));
+builder.WebHost
+    .UseKestrel(options => options.Listen(IPAddress.Any, 5000));
 
 builder.Services.AddLogging(c => c
                 .AddConsole()
