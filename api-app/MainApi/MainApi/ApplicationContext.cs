@@ -33,15 +33,11 @@ namespace MainApi
             modelBuilder.Entity<User>(t =>
             {
                 t.HasKey(s => s.Id);
-
             });
 
             modelBuilder.Entity<UserRole>(t =>
             {
                 t.HasKey(s => s.Id);
-                //t.HasOne(x => x.User)
-                //    .WithMany()
-                //    .HasForeignKey(s => s.UserId);
             });
         }
 
