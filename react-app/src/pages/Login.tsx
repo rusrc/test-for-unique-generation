@@ -1,12 +1,8 @@
 import { FormEvent, useState } from "react"
 import axios from "../services/axios";
-import useAuth from "../hooks/UserAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
-
-    // setAuth - задает стейт глобально
-    const { setAuth } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -15,17 +11,12 @@ const Login: React.FC = () => {
     const [name, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    // Общие ошибки
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     const onSubmitHandle = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        // TODO POST If good set success
         try {
-            console.log("success", success);
-
             const response = await axios.post("/Authorize", JSON.stringify({ name, password }),
                 {
                     headers: { 'Content-Type': 'application/json' }
@@ -33,8 +24,6 @@ const Login: React.FC = () => {
 
             localStorage.setItem("user", JSON.stringify(response.data));
 
-            // Если всё окей переводим по адресу во from
-            console.log("success", success);
             navigate(from, { replace: true });
         } catch (error) {
             setErrMsg(error?.response?.data + " | " + error?.message);

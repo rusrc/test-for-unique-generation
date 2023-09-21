@@ -3,9 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom"
 const Layout: React.FC = () => {
 
     const navigate = useNavigate();
-
-
-
+    
     return (
         <>
             <header className="p-3 text-bg-dark">

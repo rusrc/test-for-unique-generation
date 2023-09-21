@@ -15,13 +15,10 @@ const Register: React.FC = () => {
 
     const [is18, setIsAdult] = useState(false)
 
-    // Общие ошибки
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     const navigate = useNavigate();
 
-    // Хуки на изменение состояния
     useEffect(() => {
         console.log(name);
     }, [name]);
@@ -47,16 +44,14 @@ const Register: React.FC = () => {
     useEffect(() => { console.log(is18); }, [is18]);
 
     const onSubmitHandle = async (event: FormEvent<HTMLFormElement>) => {
+
         event.preventDefault();
 
-        // TODO POST If good set success
         try {
             const response = await axios.post("/Registration", JSON.stringify({ name, password, is18 }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 });
-
-            console.log(response);
 
             navigate("/login")
         } catch (error) {

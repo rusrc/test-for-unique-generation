@@ -51,6 +51,10 @@ namespace MainApi
 
             try
             {
+                Logger?.LogInformation(eventId, "Try migrate db");
+
+                Logger?.LogInformation(eventId, "Database migration has no pending migrations");
+
                 var pendingMigrations = Database.GetPendingMigrations().ToList();
 
                 if (pendingMigrations.Any())
