@@ -4,6 +4,7 @@ npm run dev
 
 # запуск всех сервисов
 docker-compose up --build
+## Остановить Ctrl+C и запустить опять `docker-compose up --build` есть с этим баг
 
 API сервера:
 http://localhost:5000/swagger/index.html
